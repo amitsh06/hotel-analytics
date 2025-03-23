@@ -115,6 +115,31 @@ POST /analytics
 ```
 Returns comprehensive analytics metrics and visualizations.
 
+**Example Response:**
+```json
+{
+  "total_bookings": 119390,
+  "average_daily_rate": 101.83,
+  "cancellation_rate": 0.37,
+  "revenue_trends": {
+    "2016-01": 980450.32,
+    "2016-02": 1054783.45,
+    // More months...
+  },
+  "geographical_distribution": {
+    "Portugal": 48951,
+    "UK": 12563,
+    // More countries...
+  },
+  "lead_time_stats": {
+    "mean": 104.5,
+    "median": 72,
+    "min": 0,
+    "max": 737
+  }
+}
+```
+
 #### Question Answering
 ```http
 POST /ask
@@ -125,12 +150,49 @@ Content-Type: application/json
 }
 ```
 
+**Example Response:**
+```json
+{
+  "answer": "The total revenue from Portugal bookings in August 2017 was €243,512.75",
+  "confidence": 0.92,
+  "relevant_data": {
+    "month": "August",
+    "year": 2017,
+    "country": "Portugal",
+    "booking_count": 2341,
+    "revenue": 243512.75
+  }
+}
+```
+
 ## 🧪 Testing & Performance
 
 Run automated tests:
 ```bash
 python -m pytest tests/
 ```
+
+## 🔬 System Outputs & Results
+
+This repository includes real outputs from the system during testing, stored in the `outputs/` directory. These JSON files show actual results from running the system and can be examined to verify functionality:
+
+- `outputs/analytics_report.json` - Complete analytics dashboard data
+- `outputs/sample_queries/` - Various question-answer pairs showing RAG functionality
+- `outputs/performance_metrics.json` - System performance measurements
+
+These outputs demonstrate that:
+1. The analytics engine correctly processes and summarizes booking data
+2. The Q&A system successfully answers natural language questions about the data
+3. The system meets performance requirements for response time and accuracy
+
+## 📑 Implementation Report
+
+A detailed implementation report is available in [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md), covering:
+- System architecture and component design
+- Implementation choices and rationale
+- Technical challenges and solutions
+- Sample test queries with expected outputs
+- Future improvement opportunities
 
 ## 📦 Deployment Options
 
