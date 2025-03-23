@@ -1,185 +1,165 @@
-Below is the complete README in markdown format. You can copy and paste it into a file named `README.md` in your project root.
+# 🏨 Hotel Analytics & Q&A System
 
-```markdown
-# Hotel Analytics & Q&A System
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue) 
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green)
+![Pandas](https://img.shields.io/badge/Pandas-2.2-yellow)
+![License](https://img.shields.io/badge/License-MIT-purple)
 
-This project processes hotel booking data, generates analytics reports, and provides natural language question answering using a Retrieval-Augmented Generation (RAG) approach. The system leverages FastAPI for the REST API, Pandas for data processing, and FAISS with SentenceTransformer for vector-based retrieval.
+> An intelligent system that processes hotel booking data, generates analytics insights, and answers natural language questions using advanced RAG techniques.
 
-## Table of Contents
+## 🌟 Project Overview
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Data Preprocessing](#data-preprocessing)
-  - [Starting the API Server](#starting-the-api-server)
-  - [API Endpoints](#api-endpoints)
-- [Testing & Performance](#testing--performance)
-- [Deployment](#deployment)
-- [Optional Enhancements](#optional-enhancements)
-- [Acknowledgements](#acknowledgements)
+This system is designed to transform raw hotel booking data into actionable insights through:
 
-## Project Overview
+- **Advanced Data Preprocessing** - Cleaning and structuring raw booking data
+- **Comprehensive Analytics** - Generating key business metrics and visualizations
+- **Natural Language Q&A** - Answering questions about the data using RAG approach
+- **Modern API** - Exposing functionality through a well-designed REST API
 
-This system is designed to:
-- **Preprocess** raw hotel booking data by cleaning and structuring it.
-- **Generate Analytics Reports** that include metrics such as total bookings, average daily rate, cancellation rate, revenue trends, geographical distribution, and booking lead time statistics.
-- **Answer Questions** about the data using a combination of predefined logic and a FAISS-based vector retrieval system.
-- **Expose REST API Endpoints** via FastAPI for integration and testing.
+## ✨ Features
 
-## Features
+### 📊 Data Preprocessing
+Transforms messy hotel booking data into clean, structured datasets:
+- Handles missing values and outliers
+- Computes derived metrics (total nights, revenue, etc.)
+- Prepares data for analytics and RAG processing
 
-- **Data Preprocessing:**  
-  Cleans raw data, handles missing values, computes additional metrics (e.g., total nights, total price), and stores the processed file.
+### 📈 Analytics Reporting
+Generates comprehensive business insights including:
+- Total bookings and occupancy rates
+- Average daily rate and revenue analysis
+- Cancellation patterns and trends
+- Geographic distribution of guests
+- Booking lead time and seasonality metrics
 
-- **Analytics Reporting:**  
-  Calculates and returns key metrics including:
-  - Total bookings  
-  - Average daily rate  
-  - Cancellation rate  
-  - Revenue trends over time  
-  - Geographical distribution  
-  - Booking lead time statistics
+### 🔍 Retrieval-Augmented Q&A
+Combines vector search with structured data analysis:
+- FAISS-powered vector similarity search
+- SentenceTransformer embedding for semantic understanding
+- Custom logic for handling specific query types
+- Natural language responses to business questions
 
-- **Retrieval-Augmented Q&A:**  
-  Uses FAISS and SentenceTransformer to index booking summaries and retrieve relevant information when answering questions.
+### 🚀 REST API
+Modern FastAPI implementation with:
+- **POST /analytics:** Comprehensive analytics dashboard data
+- **POST /ask:** Natural language Q&A endpoint
+- Swagger UI documentation
+- Optimized for performance
 
-- **REST API:**  
-  Built with FastAPI, the API includes the following endpoints:
-  - **POST /analytics:** Returns the analytics report.
-  - **POST /ask:** Answers booking-related questions.
-
-- **Automated Testing & Benchmarking:**  
-  Tests using pytest are provided, along with scripts or tools for benchmarking API performance.
-
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 hotel-analytics/
 ├── src/
-│   ├── api/
-│   │   ├── __init__.py
-│   │   └── main.py
-│   ├── analytics/
-│   │   ├── __init__.py
-│   │   ├── reports.py
-│   │   └── vector_store.py
-│   └── data/
-│       ├── __init__.py
-│       └── preprocessing.py
-├── tests/
-│   ├── __init__.py
-│   └── test_api.py
-├── requirements.txt
-└── README.md
+│   ├── api/              # FastAPI implementation
+│   ├── analytics/        # Analytics & vector store
+│   └── data/             # Data processing modules
+├── tests/                # Automated testing
+├── requirements.txt      # Dependencies
+└── README.md             # Documentation
 ```
 
-## Installation
+## 🛠️ Installation
 
-1. **Clone the Repository:**
+### Prerequisites
+- Python 3.8 or higher
+- Git
 
+### Setup Steps
+
+1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/hotel-analytics.git
+   git clone https://github.com/amitsh06/hotel-analytics.git
    cd hotel-analytics
    ```
 
-2. **Create and Activate a Virtual Environment:**
-
+2. **Create and Activate Virtual Environment**
    ```bash
    python -m venv venv
-   # On Windows:
+   
+   # Windows
    .\venv\Scripts\Activate.ps1
-   # On macOS/Linux:
+   
+   # macOS/Linux
    source venv/bin/activate
    ```
 
-3. **Install Dependencies:**
-
+3. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-   The `requirements.txt` includes:
-   - fastapi==0.115.11
-   - uvicorn==0.34.0
-   - python-multipart==0.0.20
-   - pandas==2.2.3
-   - numpy==2.2.4
-   - scikit-learn==1.6.1
-   - sentence-transformers==3.4.1
-   - faiss-cpu==1.7.3
-   - httpx==0.24.1
-   - pytest==7.4.0
-
-## Usage
+## 🚀 Usage
 
 ### Data Preprocessing
 
-1. **Place Your Raw Data:**  
-   Ensure your raw CSV file (e.g., `hotel_bookings.csv`) is located at the path defined in `src/data/preprocessing.py` (adjust if necessary).
-
-2. **Run the Preprocessing Script:**
-
-   ```bash
-   python src/data/preprocessing.py
-   ```
-
-   This will create a processed CSV file (e.g., `hotel_bookings_processed.csv`) in the designated folder.
+```bash
+python src/data/preprocessing.py
+```
 
 ### Starting the API Server
 
-1. **Run the FastAPI Server:**
+```bash
+uvicorn src.api.main:app --reload
+```
 
-   ```bash
-   uvicorn src.api.main:app --reload
-   ```
-
-2. **Access the API:**  
-   - The API runs on [http://127.0.0.1:8000](http://127.0.0.1:8000)
-   - Swagger UI documentation is available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+The API will be available at:
+- 🌐 API: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- 📚 Documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ### API Endpoints
 
-- **POST /analytics:**  
-  Returns a JSON report containing analytics metrics such as total bookings, average daily rate, cancellation rate, revenue trends, geographical distribution, and lead time statistics.
+#### Analytics Dashboard
+```http
+POST /analytics
+```
+Returns comprehensive analytics metrics and visualizations.
 
-- **POST /ask:**  
-  Accepts a JSON payload with a question (e.g., `"Show me total revenue for July 2017"`) and returns an answer based on both predefined logic and FAISS-based vector retrieval.
+#### Question Answering
+```http
+POST /ask
+Content-Type: application/json
 
-## Testing & Performance
+{
+  "question": "What was the revenue from Portugal bookings in August 2017?"
+}
+```
 
-- **Run Automated Tests:**
+## 🧪 Testing & Performance
 
-   ```bash
-   python -m pytest tests/
-   ```
+Run automated tests:
+```bash
+python -m pytest tests/
+```
 
-- **Benchmarking:**  
-  Use the provided benchmarking scripts or tools (e.g., Apache Bench, Postman Runner) to measure API response times and FAISS retrieval performance.
+## 📦 Deployment Options
 
-## Deployment
+- **Docker:** Container-based deployment
+- **Cloud Services:** AWS, Azure, GCP
+- **PaaS:** Heroku, Railway, Render
 
-For deployment, consider the following options:
-- **Containerization:** Create a Dockerfile to containerize the application.
-- **Cloud Hosting:** Deploy on platforms like Heroku, AWS, Railway, or DigitalOcean.
-- **Instructions:** Update deployment steps here based on your chosen method.
+## 🔄 Continuous Improvement
 
-## Optional Enhancements
+Planned enhancements:
+- Real-time data updates
+- Advanced visualization capabilities
+- Multi-language support
+- Expanded machine learning features
 
-- **Real-time Data Updates:**  
-  Integrate a database (SQLite, PostgreSQL) to update data dynamically as new records arrive.
-  
-- **Query History Tracking:**  
-  Log and store user queries for analysis.
-  
-- **Health Check Endpoint:**  
-  Implement a `/health` endpoint to monitor system status.
+## 📄 License
 
-## Acknowledgements
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-- Built with [FastAPI](https://fastapi.tiangolo.com/).
-- Vector retrieval powered by [FAISS](https://github.com/facebookresearch/faiss) and [SentenceTransformer](https://www.sbert.net/).
-- Data processing done using [Pandas](https://pandas.pydata.org/).
+## 🙏 Acknowledgements
+
+Built with powerful open-source technologies:
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [FAISS](https://github.com/facebookresearch/faiss)
+- [SentenceTransformer](https://www.sbert.net/)
+- [Pandas](https://pandas.pydata.org/)
 
 ---
+
+<p align="center">
+  <b>Made with ❤️ by Amit Sharma</b>
+</p>
