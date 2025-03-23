@@ -5,6 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from src.analytics.vector_store import VectorStore
 import logging
 import time
+import os
 from typing import Dict, Any, List
 
 # Configure logging
@@ -14,8 +15,13 @@ logger = logging.getLogger(__name__)
 class HotelAnalytics:
     def __init__(self):
         try:
-            # Load the processed CSV file
-            file_path = r"C:\Users\maith\OneDrive - Manipal University Jaipur\Desktop\hotel analytics\src\data\processed\hotel_bookings_processed.csv"
+            # Load the processed CSV file using a relative path
+            # Get the current file's directory
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            project_root = os.path.abspath(os.path.join(current_dir, '../..'))
+            file_path = os.path.join(project_root, 'src', 'data', 'processed', 'hotel_bookings_processed.csv')
+            
+            logger.info(f"Loading data from: {file_path}")
             self.df = pd.read_csv(file_path)
             
             # Create a summary column to be indexed by the vector store.
